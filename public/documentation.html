@@ -8,8 +8,191 @@
 </head>
 
 <body>
-  <h1>Movie API</h1>
-  <p>This web application will provide its users with access to information about various movies, directors, and genres.  Users will be able to sign up, update their personal information, and creat a list of their favorite movies.</p>
+  <div class="description">
+    <h1>Movie API</h1>
+    <p>This web application will provide its users with access to information about various movies, directors, and genres.  Users will be able to sign up, update their personal information, and creat a list of their favorite movies.</p>
+  </div>
+  <div class="endpointList">
+
+    <div class="endpoint">
+      <h2 class="endpointTitle">Show All Movies</h2>
+      <h3 class="url">"/movies"</h3>
+      <h4 class="method">Method Type: GET</h4>
+      <p>
+        <strong>Description:</strong> This endpoint provides the user with the full list of movies listed by the API.  It returns an array of objects (movies) and their parameters (details about each movie).
+      </p>
+      <p><strong>Request body data format:</strong> None</p>
+      <p><strong>Response body data format:</strong> An array with a list of all movies.  Each object contains data about one specific movie.</p>
+      <h4>Example:</h4>
+      <code class="code">
+        {<br />
+          Title: "The Thing", <br />
+          Description: "Based on the 1938 John W. Campbell Jr. novella Who Goes There?, it tells the story of a group of American researchers in Antarctica who encounter the eponymous "Thing", a parasitic extraterrestrial life-form that assimilates, then imitates, other organisms.", <br />
+          Genre: { Name: "Horror" }, <br />
+          Director: { Name: "John Carpenter" }, <br />
+          ImageUrl: "https://media-cache.cinematerial.com/p/500x/i9cipbg7/the-thing-movie-poster.jpg?v=1456281372"<br />
+        }
+      </code>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="endpointTitle">Search Movies by Title</h2>
+      <h3 class="url">"/movies/[movieTitle]"</h3>
+      <h4 class="method">Method Type: GET</h4>
+      <p>
+        <strong>Description:</strong> This endpoint allows the user to search for a specific movie using its title.  Returns an object with data about that movie.
+      </p>
+      <p><strong>Request body data format:</strong> None</p>
+      <p><strong>Response body data format:</strong> An object containing data about one specific movie.</p>
+      <h4>Example:</h4>
+      <code class="code">
+        {<br />
+          Title: "The Iron Giant", <br />
+          Description: "In this animated adaptation of Ted Hughes' Cold War fable, a giant alien robot crash-lands near the small town of Rockwell, Maine, in 1957. Exploring the area, a local 9-year-old boy, Hogarth, discovers the robot, and soon forms an unlikely friendship with him. When a paranoid government agent, Kent Mansley, becomes determined to destroy the robot, Hogarth and beatnik Dean McCoppin must do what they can to save the misunderstood machine.", <br />
+          Genre: { Name: "Animation" }, <br />
+          Director: { Name: "Brad Bird" }, <br />
+          ImageUrl: "https://media-cache.cinematerial.com/p/500x/mr2njuu5/the-iron-giant-movie-poster.jpg?v=1456347379"<br />
+        }
+      </code>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="endpointTitle">Search By Genre</h2>
+      <h3 class="url">"/genres/[genreName]"</h3>
+      <h4 class="method">Method Type: GET</h4>
+      <p>
+        <strong>Description:</strong> This endpoint allows the user to search for a genre.  Returns an object with data about a specific genre.
+      </p>
+      <p><strong>Request body data format:</strong> None</p>
+      <p><strong>Response body data format:</strong> An object containing data about one specific genre.</p>
+      <h4>Example:</h4>
+      <code class="code">
+        {<br />
+          Name: "Science fiction", <br />
+          Description: "Science fiction is a film genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science, such as extraterrestrial lifeforms, spacecraft, robots, cyborgs, interstellar travel or other technologies." <br />
+        }
+      </code>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="endpointTitle">Search By Director</h2>
+      <h3 class="url">"/movies/directors/[directorName]"</h3>
+      <h4 class="method">Method Type: GET</h4>
+      <p>
+        <strong>Description:</strong> This endpoint allows the user to search for a specific director.  Returns an object with data about that director.
+      </p>
+      <p><strong>Request body data format:</strong> None</p>
+      <p><strong>Response body data format:</strong> An object containing data about one specific director.</p>
+      <h4>Example:</h4>
+      <code class="code">
+        {<br />
+          Name: "Brad Bird", <br />
+          Bio: "placeholder text", <br />
+          Birth/Death Year: "placeholder dates" <br />
+        }
+      </code>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="endpointTitle">Adding Users</h2>
+      <h3 class="url">"/users"</h3>
+      <h4 class="method">Method Type: POST</h4>
+      <p>
+        <strong>Description:</strong> This endpoint allows the user to register.  Returns a JSON object with sveral key-value pairs.  "Name" returns a string, "favorite movies" returns an array, "id" returns a string.
+      </p>
+      <p><strong>Request body data format:</strong> JSON object containing data about the user.</p>
+      <h4>Example:</h4>
+      <code class="code">
+        {<br />
+          Name: "James Mayfell",<br />
+          favoriteMovies: [],<br />
+        }
+      </code>
+      <p><strong>Response body data format:</strong> An object containing data about the user including a generated unique ID.</p>
+      <h4>Example:</h4>
+      <code class="code">
+        {<br />
+        Name: "James Mayfell",<br />
+        favoriteMovies: [],<br />
+        id: "1"<br />
+        }
+      </code>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="endpointTitle">Updating Username</h2>
+      <h3 class="url">"/users/[id]"</h3>
+      <h4 class="method">Method Type: POST</h4>
+      <p>
+        <strong>Description:</strong> This endpoint allows the user to update/change their username.  Returns a JSON object with sveral key-value pairs.  "Name" returns a string, "favorite movies" returns an array, "id" returns an integer.
+      </p>
+      <p><strong>Request body data format:</strong> JSON object containing data about the user.</p>
+      <h4>Example:</h4>
+      <code class="code">
+        {<br />
+          Username: "newUserName"<br />
+        }
+      </code>
+      <p><strong>Response body data format:</strong> An object containing data about the user including a generated unique ID.</p>
+      <h4>Example:</h4>
+      <code class="code">
+        {<br />
+        Name: "James Mayfield",<br />
+        favoriteMovies: [],<br />
+        id: "1"<br />
+        }
+      </code>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="endpointTitle">Add a Favorite Movie</h2>
+      <h3 class="url">"/users/[id]/movieTitle"</h3>
+      <h4 class="method">Method Type: POST</h4>
+      <p>
+        <strong>Description:</strong> This endpoint allows the user to add a movie to their favorites list.  Returns a JSON object with user data including the updated array showing their favorite movies.
+      </p>
+      <p><strong>Request body data format:</strong> None</p>
+      <p><strong>Response body data format:</strong> A message confirming the user has successfully updated their favorite movie list (array).</p>
+      <h4>Example:</h4>
+      <code class="code"> "movieTitle has been added to favorites list!" </code>
+      <p><strong>Response Status Codes:</strong></p>
+      <p>200: OK: movie added</p>
+      <p>400: Bad Request: movie not found</p>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="endpointTitle">Remove a Favorite Movie</h2>
+      <h3 class="url">"/users/[id]/movieTitle"</h3>
+      <h4 class="method">Method Type: DELETE</h4>
+      <p>
+        <strong>Description:</strong> This endpoint allows the user to remove a movie from their favorites list.  Returns a JSON object with user data including the updated array showing their favorite movies.
+      </p>
+      <p><strong>Request body data format:</strong> None</p>
+      <p><strong>Response body data format:</strong> A message confirming the user has successfully removed a movie from their favorites list.</p>
+      <h4>Example:</h4>
+      <code class="code"> "movieTitle has been removed from favorites list." </code>
+      <p><strong>Response Status Codes:</strong></p>
+      <p>200: OK: Movie removed from array</p>
+      <p>400: Bad Request: Movie not on favorites list</p>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="endpointTitle">Deleting a User</h2>
+      <h3 class="url">"/users/[id]"</h3>
+      <h4 class="method">Method Type: DELETE</h4>
+      <p>
+        <strong>Description:</strong> This endpoint allows the user to remove their account by way of ID number.  Returns a message confirming that the account was deleted.
+      </p>
+      <p><strong>Request body data format:</strong> None</p>
+      <p><strong>Response body data format:</strong> A message confirming the user has deleted their account.</p>
+      <h4>Example:</h4>
+      <code class="code"> "User {id number} has been deleted." </code>
+      <p><strong>Response Status Codes:</strong></p>
+      <p>200: OK: User has been deleted</p>
+      <p>400: Bad Request: User not found</p>
+    </div>
+
+  </div>
 </body>
 
 </html>
