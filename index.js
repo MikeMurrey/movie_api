@@ -1,8 +1,35 @@
-const express = require('express'),
-  morgan = require('morgan'),
-  bodyParser = require('bodyParser'),
-  uuid = require('uuid');
+const express = require("express"),
+  morgan = require("morgan"),
+  bodyParser = require("body-parser"),
+  uuid = require("uuid");
 const app = express();
+
+// Middleware
+app.use(morgan("common"));
+
+// using static file serving could not get a desirable URL.  Prefer ending with "/documentation" using the get request
+// app.use("/documentation.html", express.static("public"));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
+
+let users = [
+  {
+    id: 1,
+    userName: "Jordi97",
+    favoriteMovies: []
+  },
+  {
+    id: 2,
+    userName: "Darmok",
+    favoriteMovies: []
+  },
+  {
+    id: 3,
+    userName: "Jalad",
+    favoriteMovies: []
+  }
+];
 
 let topMovies = [
   {
@@ -65,7 +92,7 @@ let topMovies = [
     Title: "Toy Story",
     Description: "A cowboy doll is profoundly threatened and jealous when a new spaceman action figure supplants him as top toy in a boy's bedroom.",
     Genre: { Name: "Animation" },
-    Director: { Name: "JOhn Lasseter" },
+    Director: { Name: "John Lasseter" },
     ImageURL: "https://xl.movieposterdb.com/13_05/1995/114709/xl_114709_6645f9fc.jpg"
   },
   {
@@ -77,33 +104,53 @@ let topMovies = [
   },
 ];
 
-// Provide access to static files
-app.use(express.static('public'));
-
-// Log data with Morgan
-app.use(morgan('common'));
-
 
 // GET requests
-app.get('/', (req, res) => {
-  res.send('Welcome to my movie website!');
+app.get("/", (req, res) => {
+  res.send("Welcome to MyFlix!");
 });
 
-app.get('/documentation', (req, res) => {
-  res.sendFile('public/documentation.html', {root:__dirname});
+app.get("/documentation", (req, res) => {
+  res.sendFile("public/documentation.html", { root: __dirname});
 });
 
-app.get('/movies', (req, res) => {
+// List all movies
+app.get("/movies", (req, res) => {
   res.json(topMovies);
 });
+
+// Get a single movie by Title
+app.get("/movies/:title", (req, res) => {
+  const { title } = req.params;
+  const movie = topMovies.find((movie) => movie.Title === title);
+  if (movie) {
+    res.status(200).json(movie);
+  } else {
+    res.status(400).send("Movie not found.");
+  }
+});
+
+// Get data about a genre by name
+app.get("/movies/genres/:genreName", (req, res) => {
+  const { genreName } = req.params;
+  const genre = topMovies.find((movie) => movie.Genre.Name === genreName).Genre;
+  if (genre) {
+    res.status(200).json(genre);
+  } else {
+    res.status(400).send("Genre not found.");
+  }
+});
+
+// Return data about a director
+
 
 // Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('An error occurred');
+  res.status(500).send("An error occurred");
 });
 
 
 app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
+  console.log("Your app is listening on port 8080.");
 });
