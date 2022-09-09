@@ -14,17 +14,17 @@ app.use(bodyParser.json());
 let users = [
   {
     id: 1,
-    userName: "Jordi97",
+    name: "Jordi97",
     favoriteMovies: []
   },
   {
     id: 2,
-    userName: "Darmok",
+    name: "Darmok",
     favoriteMovies: []
   },
   {
     id: 3,
-    userName: "Jalad",
+    name: "Jalad",
     favoriteMovies: ["The Thing"]
   }
 ];
@@ -162,6 +162,39 @@ let movies = [
   },
 ];
 
+// Get list of users
+app.get("/users", (req, res) => {
+  res.json(users);
+});
+
+// Create a new user
+app.post("/users", (req, res) => {
+  const newUser = req.body;
+
+  if (!newUser.name) {
+    const message = "Missing username is request body";
+    res.status(400).send(message);
+  } else {
+    newUser.id = uuid.v4();
+    users.push(newUser);
+    res.status(201).send(newUser);
+  }
+});
+
+// Update Username
+app.put("/users/:id", (req, res) => {
+  const {id} = req.params;
+  const updatedUser = req.body;
+  let user = users.find(user => user.id == id);
+
+  if (user) {
+    user.name = updatedUser.name;
+    res.status(200).send("Username updated!");
+  } else {
+    res.status(400).send("Bad Request - User does not exist.");
+  }
+});
+
 
 // GET requests
 app.get("/", (req, res) => {
@@ -170,13 +203,13 @@ app.get("/", (req, res) => {
 
 // List all movies
 app.get("/movies", (req, res) => {
-  res.json(topMovies);
+  res.status(200).json(movies);
 });
 
 // Get a single movie by Title
 app.get("/movies/:title", (req, res) => {
   const { title } = req.params;
-  const movie = topMovies.find((movie) => movie.Title === title);
+  const movie = movies.find((movie) => movie.Title === title);
   if (movie) {
     res.status(200).json(movie);
   } else {
@@ -187,7 +220,7 @@ app.get("/movies/:title", (req, res) => {
 // Get data about a genre by name
 app.get("/movies/genres/:genreName", (req, res) => {
   const { genreName } = req.params;
-  const genre = topMovies.find((movie) => movie.Genre.Name === genreName).Genre;
+  const genre = movies.find((movie) => movie.Genre.Name === genreName).Genre;
   if (genre) {
     res.status(200).json(genre);
   } else {
