@@ -173,13 +173,11 @@ app.get("/users", (req, res) => {
 app.post("/users", (req, res) => {
   const newUser = req.body;
 
-  if (!newUser.name) {
-    const message = "Missing 'name' in request body.";
-    res.status(400).send(message);
-  } else {
+  if (newUser.name) {
     newUser.id = uuid.v4();
-    users.push(newUser);
-    res.status(201).send(newUser);
+    res.status(201).json(newUser);
+  } else {
+    res.status(400).send("Users require a name.")
   }
 });
 
@@ -191,7 +189,7 @@ app.put("/users/:id", (req, res) => {
 
   if (user) {
     user.name = updatedUser.name;
-    res.status(200).send("Username updated!");
+    res.status(200).json(user);
   } else {
     res.status(400).send("Bad Request - User does not exist.");
   }
