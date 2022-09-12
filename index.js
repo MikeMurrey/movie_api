@@ -162,6 +162,8 @@ let movies = [
   },
 ];
 
+// USER RELATED OPTIONS
+
 // Get list of users
 app.get("/users", (req, res) => {
   res.json(users);
@@ -172,7 +174,7 @@ app.post("/users", (req, res) => {
   const newUser = req.body;
 
   if (!newUser.name) {
-    const message = "Missing username is request body";
+    const message = "Missing 'name' in request body.";
     res.status(400).send(message);
   } else {
     newUser.id = uuid.v4();
@@ -195,11 +197,55 @@ app.put("/users/:id", (req, res) => {
   }
 });
 
+// Add a movie to favorites list
+app.post("/users/:id/:movieTitle", (req, res) => {
+  const {id, movieTitle} = req.params;
 
-// GET requests
+  let user = users.find(user => user.id == id); //finds the proper user
+
+  if (user) {
+    user.favoriteMovies.push(movieTitle);
+    res.status(200).send(`${movieTitle} has been added to user ${id}'s favorites list.`);
+  } else {
+    res.status(400).send("User not found.");
+  }
+});
+
+// Remove a movie from favorites list
+app.delete("/users/:id/:movieTitle", (req, res) => {
+  const {id, movieTitle} = req.params;
+
+  let user = users.find(user => user.id == id); //finds the proper user
+
+  if (user) {
+    user.favoriteMovies = user.favoriteMovies.filter( title => title !== movieTitle);
+    res.status(200).send(`${movieTitle} has been removed from user ${id}'s favorites list.`);
+  } else {
+    res.status(400).send("User not found.");
+  }
+});
+
+// Delete a user
+app.delete("/users/:id", (req, res) => {
+  const {id} = req.params;
+
+  let user = users.find(user => user.id == id); //finds the proper user
+
+  if (user) {
+    users = users.filter( user => user.id != id);
+    res.status(200).send(`User ${id} has been deleted.`);
+  } else {
+    res.status(400).send("User not found.");
+  }
+});
+
+// DEFAULT RESPONSE
 app.get("/", (req, res) => {
   res.send("Welcome to MyFlix!");
 });
+
+
+//MOVIE INFO RELATED OPTIONS
 
 // List all movies
 app.get("/movies", (req, res) => {
@@ -208,7 +254,7 @@ app.get("/movies", (req, res) => {
 
 // Get a single movie by Title
 app.get("/movies/:title", (req, res) => {
-  const { title } = req.params;
+  const {title} = req.params;
   const movie = movies.find((movie) => movie.Title === title);
   if (movie) {
     res.status(200).json(movie);
@@ -229,6 +275,17 @@ app.get("/movies/genres/:genreName", (req, res) => {
 });
 
 // Return data about a director
+app.get("/movies/directors/:directorName", (req, res) => {
+  const {directorName} = req.params;
+  const director = movies.find(movie => movie.Director.Name === directorName).Director;
+
+  if (director) {
+    res.status(200).json(director);
+  } else {
+    res.status(400).send("Director not found.");
+  }
+});
+
 
 
 // Error handler
