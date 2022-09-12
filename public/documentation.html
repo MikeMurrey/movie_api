@@ -104,8 +104,7 @@
       <code class="code">
         {<br />
           Name: "Brad Bird", <br />
-          Bio: "placeholder text", <br />
-          Birth/Death Year: "placeholder dates" <br />
+          Bio: "Phillip Bradley \"Brad\" Bird was born on September 24, 1957 in Kalispell, Montana. He is an American director, screenwriter, animator, producer and occasional voice actor, known for both animated and live-action films.", <br />
         }
       </code>
     </div>
@@ -123,7 +122,8 @@
       <h4>Example request:</h4>
       <code class="code">
         {<br />
-          userName: "Darmok",<br />
+          "name": "Darmok",<br />
+          "favoriteMovies": []<br />
         }
       </code>
       <p><strong>Expected response data:</strong> A JSON object containing data about the user including a generated unique ID.</p>
@@ -137,7 +137,7 @@
       </code>
       <p><strong>Response status codes:</strong></p>
       <p>201: User created</p>
-      <p>400: Bad Request- username required!</p>
+      <p>400: Bad Request- User requires a name.</p>
     </div>
     <br />
 
@@ -153,21 +153,22 @@
       <h4>Example request:</h4>
       <code class="code">
         {<br />
-          userName: "newUserName"<br />
+          "name": "newUserName"<br />
+          "favoriteMovies": []<br />
         }
       </code>
       <p><strong>Expected response data:</strong> A JSON object containing data about the user including a generated unique ID and their updated userName.</p>
       <h4>Example:</h4>
       <code class="code">
         {<br />
-        id: 1,<br />
-        userName: "newUserName",<br />
-        favoriteMovies: [],<br />
+        "id": 1,<br />
+        "name": "newUserName",<br />
+        "favoriteMovies": [],<br />
         }
       </code>
       <P><strong>Response status codes</strong></P>
-      <p>200: Username updated</p>
-      <p>400: Bad Request- user does not exist</p>
+      <p>200: Returns JSON object of user showing their updated name</p>
+      <p>400: Bad Request- User does not exist</p>
     </div>
     <br />
 
@@ -184,10 +185,10 @@
       <p>localhost:8080/users/1/Alien</p>
       <p><strong>Expected response data:</strong> A message confirming the user has successfully updated their favorite movie list (array).</p>
       <h4>Example response:</h4>
-      <code class="code"> "Alien has been added to favorites list!" </code>
+      <code class="code"> "Alien has been added to user 1's favorites list." </code>
       <p><strong>Response Status Codes:</strong></p>
-      <p>200: OK: movie added</p>
-      <p>400: Bad Request: movie not found</p>
+      <p>200: Alien has been added to user 1's favorites list.</p>
+      <p>400: User not found.</p>
     </div>
     <br />
 
@@ -201,13 +202,13 @@
       <p><strong>Query Parameters:</strong> :id, :movieTitle</p>
       <p><strong>Expected request data:</strong> Required: /id, /movieTitle</p>
       <h4>Example request:</h4>
-      <p>localhost:8080/users/1/Alien</p>
+      <p>localhost:8080/users/3/The%20Thing</p>
       <p><strong>Expected response data:</strong> A message confirming the user has successfully removed a movie from their favorites list.</p>
       <h4>Example response:</h4>
-      <code class="code"> "Alien has been removed from favorites list." </code>
+      <code class="code"> "The Thing has been removed from user 3's favorites list." </code>
       <p><strong>Response Status Codes:</strong></p>
-      <p>200: OK: Movie removed</p>
-      <p>400: Bad Request: Movie not on favorites list</p>
+      <p>200: The Thing has been removed from user 3's favorites list.</p>
+      <p>400: User not found.</p>
     </div>
     <br />
 
@@ -224,10 +225,10 @@
       <p>localhost:8080/users/1</p>
       <p><strong>Expected response data:</strong> A message confirming the user has deleted their account.</p>
       <h4>Example response:</h4>
-      <code class="code"> "User {1} has been deleted." </code>
+      <code class="code"> "User 1 has been deleted." </code>
       <p><strong>Response Status Codes:</strong></p>
-      <p>200: OK- User has been deleted</p>
-      <p>400: Bad Request- User not found</p>
+      <p>200: User 1 has been deleted.</p>
+      <p>400: User not found.</p>
     </div>
 
   </div>
