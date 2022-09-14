@@ -15,12 +15,12 @@ let users = [
   {
     id: 1,
     name: "Jordi97",
-    favoriteMovies: []
+    favoriteMovies: ["The Shining"]
   },
   {
     id: 2,
     name: "Darmok",
-    favoriteMovies: []
+    favoriteMovies: ["Alien"]
   },
   {
     id: 3,
