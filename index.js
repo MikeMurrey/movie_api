@@ -113,7 +113,7 @@ let movies = [
   },
   {
     "Title": "The Iron Giant",
-    "Description": "A young boy befriends a giant robot from outer space that a paranoid government agent wants to destroy",
+    "Description": "A young boy befriends a giant robot from outer space that a paranoid government agent wants to destroy.",
     "Genre": {
       "Name": "Animation",
       "Description": "Animations are not a strictly-defined genre category, but rather a film technique, although they often contain genre-like elements. Animation, fairy tales, and stop-motion films often appeal to children, but it would marginalize animations to view them only as \"children's entertainment.\" Animated films are often directed to, or appeal most to children, but easily can be enjoyed by all."
