@@ -107,7 +107,7 @@ let movies = [
     },
     "Director": {
       "Name": "Ridley Scott",
-      "Bio": "Described by film producer Michael Deeley as \"the very best eye in the business\", director Ridley Scott was born on November 30, 1937 in South Shields, Tyne and Wear."
+      "Bio": "Described by film producer Michael Deeley as \"the very best eye in the business\", director Ridley Scott was born on November 30, 1937 in South Shields, United Kingdom."
   },
     "ImageURL": "https://media-cache.cinematerial.com/p/500x/p9j1hhoe/alien-movie-poster.jpg?v=1456821679"
   },
