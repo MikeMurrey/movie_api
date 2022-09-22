@@ -6,6 +6,9 @@ const express = require("express"),
   Models = require('./models.js');
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 const Movies = Models.Movie;
 const Users = Models.User;
 
@@ -15,8 +18,6 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, u
 app.use(morgan("common"));
 
 app.use(express.static("public"));
-
-app.use(bodyParser.json());
 
 let users = [
   {
