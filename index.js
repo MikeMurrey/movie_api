@@ -114,14 +114,14 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
     $push: { FavoriteMovies: req.params.MovieID }
   },
   { new: true }, //This line makes ure that the updated document is returned
-  (err, updatedUser => {
-    if (err) {
+  (err, updatedUser) => {
+    if(err) {
       console.error(err);
       res.status(500).send('Error: ' + err);
     } else {
       res.json(updatedUser);
     }
-  }));
+  });
 });
 
 // Remove a movie from favorites list
@@ -130,14 +130,14 @@ app.delete('/users/:Username/movies/:MovieID', (req, res) => {
     $pull: { FavoriteMovies: req.params.MovieID }
   },
   { new: true }, //This line makes ure that the updated document is returned
-  (err, updatedUser => {
-    if (err) {
+  (err, updatedUser) => {
+    if(err) {
       console.error(err);
       res.status(500).send('Error: ' + err);
     } else {
       res.json(updatedUser);
     }
-  }));
+  });
 });
 
 // Delete a user by username
