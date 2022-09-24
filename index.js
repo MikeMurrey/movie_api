@@ -165,42 +165,65 @@ app.get("/", (req, res) => {
 //MOVIE INFO RELATED OPTIONS
 
 // List all movies
-app.get("/movies", (req, res) => {
-  res.status(200).json(movies);
+app.get('/movies', (req, res) => {
+  Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 // Get a single movie by Title
-app.get("/movies/:title", (req, res) => {
-  const {title} = req.params;
-  const movie = movies.find((movie) => movie.Title === title);
-  if (movie) {
-    res.status(200).json(movie);
-  } else {
-    res.status(400).send("Movie not found.");
-  }
+app.get('/movies/:Title', (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+    .then((movie) => {
+      res.json(movie);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 // Get data about a genre by name
-app.get("/movies/genres/:genreName", (req, res) => {
-  const { genreName } = req.params;
-  const genre = movies.find((movie) => movie.Genre.Name === genreName).Genre;
-  if (genre) {
-    res.status(200).json(genre);
-  } else {
-    res.status(400).send("Genre not found.");
-  }
+app.get('/movies/genres/:Genre', (req, res) => {
+  Movies.find().then((movies) => {
+      const genres = movies.map((movie) => movie.Genre);
+      const foundGenre = genres.find(
+        (genre) => genre.Name === req.params.Genre
+      );
+      if (foundGenre) {
+        res.status(201).json(foundGenre);
+      } else {
+        res.status(400).send('Genre not found');
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 // Return data about a director
-app.get("/movies/directors/:directorName", (req, res) => {
-  const {directorName} = req.params;
-  const director = movies.find(movie => movie.Director.Name === directorName).Director;
-
-  if (director) {
-    res.status(200).json(director);
-  } else {
-    res.status(400).send("Director not found.");
-  }
+app.get("/movies/directors/:Director", (req, res) => {
+  Movies.find().then((movies) => {
+      const directors = movies.map((movie) => movie.Director);
+      const foundDirector = directors.find(
+        (director) => director.Name === req.params.Director
+      );
+      if (foundDirector) {
+        res.status(201).json(foundDirector);
+      } else {
+        res.status(400).send('Director not found');
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 
