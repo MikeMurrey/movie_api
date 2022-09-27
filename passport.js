@@ -9,9 +9,9 @@ const passport = require('passport'),
 
     passport.use(new LocalStrategy({
       usernameField: 'Username',
-      passwordField: 'Passoword'
+      passwordField: 'Password'
     }, (username, password, callback) => {
-      console.log(username + ' ' + passowrd);
+      console.log(username + '  ' + passowrd);
       Users.findOne({ Username: username }, (error, user) => {
         if (error) {
           console.log(error);
