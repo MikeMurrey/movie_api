@@ -11,7 +11,7 @@ const passport = require('passport'),
       usernameField: 'Username',
       passwordField: 'Password'
     }, (username, password, callback) => {
-      console.log(username + '  ' + passowrd);
+      console.log(username + '  ' + password);
       Users.findOne({ Username: username }, (error, user) => {
         if (error) {
           console.log(error);
