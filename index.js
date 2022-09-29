@@ -53,6 +53,8 @@ app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) =
     });
 });
 
+
+
 // Get a user by username
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOne({ Username: req.params.Username })
@@ -64,6 +66,8 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
       res.status(500).send('Error: ' + err);
     });
 });
+
+
 
 // Create a new user
 /* The following JSON format is expected
@@ -116,6 +120,8 @@ app.post('/users',
     });
 });
 
+
+
 // Update a user's info by username
 /* Json format expected
 {
@@ -160,6 +166,8 @@ passport.authenticate('jwt', { session: false }), (req, res) => {
   });
 });
 
+
+
 // Add a movie to user's favorites list
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, {
@@ -175,6 +183,8 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
     }
   });
 });
+
+
 
 // Remove a movie from favorites list
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -192,6 +202,8 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
   });
 });
 
+
+
 // Delete a user by username
 app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
@@ -208,10 +220,13 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
     });
 });
 
+
+
 // DEFAULT RESPONSE
 app.get("/", (req, res) => {
   res.send("Welcome to MyFlix!");
 });
+
 
 
 //MOVIE INFO RELATED OPTIONS
@@ -228,6 +243,8 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
     });
 });
 
+
+
 // Get a single movie by Title
 app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ Title: req.params.Title })
@@ -239,6 +256,8 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
       res.status(500).send('Error: ' + err);
     });
 });
+
+
 
 // Get data about a genre by name
 app.get('/movies/genres/:Genre', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -259,6 +278,8 @@ app.get('/movies/genres/:Genre', passport.authenticate('jwt', { session: false }
     });
 });
 
+
+
 // Return data about a director
 app.get("/movies/directors/:Director", passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find().then((movies) => {
@@ -277,6 +298,7 @@ app.get("/movies/directors/:Director", passport.authenticate('jwt', { session: f
       res.status(500).send('Error: ' + err);
     });
 });
+
 
 
 app.listen(8080, () => {
