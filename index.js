@@ -5,6 +5,7 @@ const express = require("express"),
   mongoose = require('mongoose');
   Models = require('./models.js');
 const app = express();
+const { check, validationResult } = require('express-validator');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -73,7 +74,22 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
   Email: String,
   Birthday: Date
 }*/
-app.post('/users', (req, res) => {
+app.post('/users', 
+// Validation logic
+[
+  check('Username', 'Username is required').isLength({min:5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Passowrd', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+], (req, res) => {
+
+//check validation object for errors
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username }) //see if a user with this name already exists
     .then((user) => {
