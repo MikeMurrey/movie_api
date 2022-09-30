@@ -34,7 +34,7 @@ const Users = Models.User;
 
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
-mongoose.connect('mongodb+srv://MMurrey31:MyDB_3113@myflixdb.8hn7x3v.mongodb.net/myFlixDB?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Middleware
 app.use(morgan("common"));
