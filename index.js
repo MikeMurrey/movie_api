@@ -239,7 +239,7 @@ app.get("/", (req, res) => {
 //MOVIE INFO RELATED OPTIONS
 
 // List all movies
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
